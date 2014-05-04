@@ -1,0 +1,49 @@
+from flask import Flask, url_for, request,render_template,abort,redirect,make_response
+app = Flask(__name__)
+
+'''
+@app.route('/index')
+def index():
+    return render_template('login.html')
+        
+    
+@app.route('/login', methods=['GET', 'POST'])
+def login():
+    if request.method == "POST":
+        if len(request.form['username']) < len(request.form['password']):
+            error = "username or password is wrong"
+        else:
+            error = "ok"
+    else:
+        return "error not support get request"
+    return render_template('login.html', error=error)
+
+@app.route('/hello/')
+@app.route('/hello/<name>')
+def hello(name=None):
+    return render_template('hello.html', name=name)
+
+@app.route('/')
+def index1():
+    return redirect(url_for('login1'))
+
+@app.route('/login1')
+def login1():
+    abort(401)
+    this_is_never_executed()
+'''
+
+@app.route('/index2',methods=['GET','POST'])
+def index2():
+    resp = make_response(render_template('cookie.html'))
+    resp.set_cookie('username','the username')
+    return resp
+
+@app.route('/index3', methods=['GET','POST'])
+def index3():
+    username = request.cookies.get('username')
+    return username
+
+if __name__ == '__main__':
+    app.run(host="0.0.0.0",port=5000,debug=True)
+    #app.run()
